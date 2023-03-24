@@ -1,0 +1,6 @@
+[submodule "libs/restc-cpp"]
+	path = libs/restc-cpp
+	url = https://github.com/jgaa/restc-cpp.git
+[submodule "libs/cxxopts"]
+	path = libs/cxxopts
+	url = https://github.com/jarro2783/cxxopts.git
