@@ -1,0 +1,31 @@
+Script started on 2023-03-31 10:02:52+03:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="233" LINES="7"]
+]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ server
+
+Команда «server» не найдена, но может быть установлена с помощью:
+
+sudo apt install golang-golang-x-tools
+
+]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ filenames
+
+Команда «filenames» не найдена. Возможно, вы имели в виду:
+
+  command 'filename' from deb wcstools (3.9.5-3)
+
+Try: sudo apt install <deb name>
+
+]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ filenames[K[K]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ [K]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ [K]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ [K]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ --use train
+--use: команда не найдена
+]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ [K]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ [K]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ --use train
+--use: команда не найдена
+]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ --use train
+--use: команда не найдена
+]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ --use train
+--use: команда не найдена
+]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ --use train
+--use: команда не найдена
+]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ --use train
+--use: команда не найдена
+]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ --bur[K[Kar
+--bar: команда не найдена
+]0;anastasia@anastasia-BOHK-WAX9X: ~/CLionProjects/PacketManagerClient[01;32manastasia@anastasia-BOHK-WAX9X[00m:[01;34m~/CLionProjects/PacketManagerClient[00m$ 
+Script done on 2023-03-31 11:39:19+03:00 [COMMAND_EXIT_CODE="129"]
