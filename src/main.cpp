@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include "cxxopts.hpp"
 
 void init(){
@@ -22,9 +21,6 @@ void version(){
     std::cout << "Вызвана команда version" << std::endl;
 }
 
-
-
-
 int main(int argc, char** argv)
 {
     cxxopts::Options options("test", "A brief description");
@@ -35,6 +31,7 @@ int main(int argc, char** argv)
             ("d,deinit", "Print usage")
             ("a,add", "Print usage", cxxopts::value<std::string>())
             ("h,help", "Print usage")
+            ("v,version", "Print usage")
             ;
 
     auto result = options.parse(argc, argv);
@@ -46,8 +43,15 @@ int main(int argc, char** argv)
     else if (result.count("deinit"))
         deinit();
     else if (result.count("add")){
-        std::string NamePacket = result["add"].as<std::string>();
-        add(NamePacket);
+        if (result.count("add") > 1)
+        {
+            std::cout << "ERROR" << std::endl;
+            exit(0);
+        }
+        else {
+            std::string NamePacket = result["add"].as<std::string>();
+            add(NamePacket);
+        }
     }
     else if (result.count("version"))
         version();
