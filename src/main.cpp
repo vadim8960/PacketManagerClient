@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "cxxopts.hpp"
 
 void init(){
@@ -14,15 +15,14 @@ void deinit(){
 }
 
 void add(std::string NamePacket){
-    std::cout << "Вызвана команда add с параметром " << NamePacket << std::endl;
+    std::cout << "Вызвана команда add с параметром " << NamePacket<< std::endl;
 }
 
 void version(){
     std::cout << "Вызвана команда version" << std::endl;
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     cxxopts::Options options("test", "A brief description");
 
     options.add_options()
@@ -31,31 +31,29 @@ int main(int argc, char** argv)
             ("d,deinit", "Print usage")
             ("a,add", "Print usage", cxxopts::value<std::string>())
             ("h,help", "Print usage")
-            ("v,version", "Print usage")
-            ;
+            ("v,version", "Print usage");
 
     auto result = options.parse(argc, argv);
 
     if (result.count("init"))
         init();
-    else if (result.count("update"))
+    if (result.count("update"))
         update();
-    else if (result.count("deinit"))
+    if (result.count("deinit"))
         deinit();
-    else if (result.count("add")){
-        if (result.count("add") > 1)
-        {
+    if (result.count("add")) {
+        if (result.count("add") > 1) {
             std::cout << "ERROR" << std::endl;
             exit(0);
-        }
-        else {
+        } else {
             std::string NamePacket = result["add"].as<std::string>();
             add(NamePacket);
         }
     }
-    else if (result.count("version"))
+    if (result.count("version"))
         version();
-    else{
+    if ((result.count("init")== false && result.count("update")== false && result.count("deinit")== false && result.count("add")== false) or (result.count("help")))
+    {
         std::cout << options.help() << std::endl;
         exit(0);
     }
