@@ -2,27 +2,27 @@
 #include <vector>
 #include "cxxopts.hpp"
 
-void init(){
+void init() {
     std::cout << "Вызвана команда init" << std::endl;
 }
 
-void update(){
+void update() {
     std::cout << "Вызвана команда update" << std::endl;
 }
 
-void deinit(){
+void deinit() {
     std::cout << "Вызвана команда deinit" << std::endl;
 }
 
-void add(std::string NamePacket){
-    std::cout << "Вызвана команда add с параметром " << NamePacket<< std::endl;
+void add(std::string NamePacket) {
+    std::cout << "Вызвана команда add с параметром " << NamePacket << std::endl;
 }
 
-void version(){
+void version() {
     std::cout << "Вызвана команда version" << std::endl;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     cxxopts::Options options("test", "A brief description");
 
     options.add_options()
@@ -52,8 +52,8 @@ int main(int argc, char** argv) {
     }
     if (result.count("version"))
         version();
-    if ((result.count("init")== false && result.count("update")== false && result.count("deinit")== false && result.count("add")== false) or (result.count("help")))
-    {
+    if ((result.count("init") + result.count("update") + result.count("deinit") + result.count("add") == 0) ||
+        (result.count("help"))) {
         std::cout << options.help() << std::endl;
         exit(0);
     }
