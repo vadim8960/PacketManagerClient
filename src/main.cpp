@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <unistd.h>
+#include <stdio.h>
+// #include <dir.h>
 #include "cxxopts.hpp"
 
 void init() {
@@ -24,6 +27,18 @@ void version() {
 
 int main(int argc, char **argv) {
     cxxopts::Options options("test", "A brief description");
+// Начало
+    char buff[16384];
+    ssize_t len = ::readlink("/proc/self/exe", buff, sizeof(buff)-1);
+    if (len != -1)
+        buff[len] = '\0';
+    std::cout << buff << std::endl;
+//Конец
+
+ /*   char dir[MAXDIR];
+    getcwd(dir, MAXDIR);
+    printf("Current directory is %s", dir);
+    return 0; */
 
     options.add_options()
             ("i,init", "Print usage")
