@@ -1,12 +1,20 @@
 #include <iostream>
-#include <vector>
+#include <fstream>
+#include <filesystem>
 #include <unistd.h>
-#include <stdio.h>
-// #include <dir.h>
 #include "cxxopts.hpp"
 
+namespace fs = std::filesystem;
+
 void init() {
-    std::cout << "Вызвана команда init" << std::endl;
+
+    std::string s;
+    char dir[256];
+    getcwd(dir, 256);
+    std::cout << "Current directory is " << dir << std::endl;
+    fs::create_directories( std::string (dir) + "/depend");
+    std::ofstream f(std::string (dir) + "/depend/dependences.txt");
+    f.close();
 }
 
 void update() {
@@ -27,18 +35,6 @@ void version() {
 
 int main(int argc, char **argv) {
     cxxopts::Options options("test", "A brief description");
-// Начало
-    char buff[16384];
-    ssize_t len = ::readlink("/proc/self/exe", buff, sizeof(buff)-1);
-    if (len != -1)
-        buff[len] = '\0';
-    std::cout << buff << std::endl;
-//Конец
-
- /*   char dir[MAXDIR];
-    getcwd(dir, MAXDIR);
-    printf("Current directory is %s", dir);
-    return 0; */
 
     options.add_options()
             ("i,init", "Print usage")
