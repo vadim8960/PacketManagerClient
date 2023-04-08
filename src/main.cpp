@@ -12,8 +12,8 @@ void init() {
     char dir[256];
     getcwd(dir, 256);
     std::cout << "Current directory is " << dir << std::endl;
-    fs::create_directories( std::string (dir) + "/depend");
-    std::ofstream f(std::string (dir) + "/depend/dependences.txt");
+    fs::create_directories( std::string (dir) + "/.depend");
+    std::ofstream f(std::string (dir) + "/dependences.txt");
     f.close();
 }
 
