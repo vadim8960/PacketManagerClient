@@ -2,6 +2,7 @@
 #include <fstream>
 #include <filesystem>
 #include <unistd.h>
+#include "App.h"
 #include "cxxopts.hpp"
 
 namespace fs = std::filesystem;
