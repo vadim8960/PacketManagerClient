@@ -1,80 +1,18 @@
-//
-// Created by vadim on 08.04.23.
-//
-
 #include <iostream>
 #include <fstream>
 #include <filesystem>
 #include <unistd.h>
 #include "cxxopts.hpp"
-
-class App {
-private:
-    static App *run;
-    void init();
-    void update();
-    void deinit();
-    void add(std::string NamePacket);
-    void version();
-
-    ~App() {
-        delete run;
-    }
-
-protected:
-    App(int argc, char **argv) {                              //конструктор
-        cxxopts::Options options("test", "A brief description");
-
-        options.add_options()
-                ("i,init", "Print usage")
-                ("u,update", "Print usage")
-                ("d,deinit", "Print usage")
-                ("a,add", "Print usage", cxxopts::value<std::string>())
-                ("h,help", "Print usage")
-                ("v,version", "Print usage");
-
-        auto result = options.parse(argc, argv);
-
-        if (result.count("init"))
-            init();
-        if (result.count("update"))
-            update();
-        if (result.count("deinit"))
-            deinit();
-        if (result.count("add")) {
-            if (result.count("add") > 1) {
-                std::cout << "ERROR" << std::endl;
-                exit(0);
-            } else {
-                std::string NamePacket = result["add"].as<std::string>();
-                add(NamePacket);
-            }
-        }
-        if (result.count("version"))
-            version();
-        if ((result.count("init") + result.count("update") + result.count("deinit") + result.count("add") == 0) ||
-            (result.count("help"))) {
-            std::cout << options.help() << std::endl;
-            exit(0);
-        }
-    }
-public:
-    static App* Run(int argc, char **argv) {
-        if (run == nullptr) {
-            run = new App(argc, argv);
-            return run;
-        } else
-            return nullptr;
-    }
-};
-
-App *App::run = nullptr;
-
+#include "App.h"
 
 namespace fs = std::filesystem;
 
-void App::init() {
+App *App::getInstance() {
+    static App instance;
+    return &instance;
+}
 
+void init() {
     std::string s;
     char dir[256];
     getcwd(dir, 256);
@@ -84,19 +22,63 @@ void App::init() {
     f.close();
 }
 
-void App::update() {
+void update() {
     std::cout << "Вызвана команда update" << std::endl;
 }
 
-void App::deinit() {
+void deinit() {
     std::cout << "Вызвана команда deinit" << std::endl;
 }
 
-void App::add(std::string NamePacket) {
+void add(std::string NamePacket) {
     std::cout << "Вызвана команда add с параметром " << NamePacket << std::endl;
 }
 
-void App::version() {
+void version() {
     std::cout << "Вызвана команда version"
               << std::endl;
 }
+
+void run(int argc, char **argv) {
+    cxxopts::Options options("test", "A brief description");
+
+    options.add_options()
+            ("i,init", "Print usage")
+            ("u,update", "Print usage")
+            ("d,deinit", "Print usage")
+            ("a,add", "Print usage", cxxopts::value<std::string>())
+            ("h,help", "Print usage")
+            ("v,version", "Print usage");
+
+    auto result = options.parse(argc, argv);
+
+    if (result.count("init"))
+        init();
+    if (result.count("update"))
+        update();
+    if (result.count("deinit"))
+        deinit();
+    if (result.count("add")) {
+        if (result.count("add") > 1) {
+            std::cout << "ERROR" << std::endl;
+            exit(0);
+        } else {
+            std::string NamePacket = result["add"].as<std::string>();
+            add(NamePacket);
+        }
+    }
+    if (result.count("version"))
+        version();
+    if ((result.count("init") + result.count("update") + result.count("deinit") + result.count("add") == 0) ||
+        (result.count("help"))) {
+        std::cout << options.help() << std::endl;
+        exit(0);
+    }
+}
+
+
+
+
+
+
+

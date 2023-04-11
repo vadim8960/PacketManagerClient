@@ -1,13 +1,8 @@
 #include <iostream>
-#include <fstream>
-#include <filesystem>
-#include <unistd.h>
 #include "App.h"
-#include "cxxopts.hpp"
 
 
-int main(int argc, char *argv[]) {
-
-    App* t = App::Run(argc, argv);
+int main(int argc, char **argv) {
+    App::getInstance()->run(argc, **argv);
     return 0;
 }
