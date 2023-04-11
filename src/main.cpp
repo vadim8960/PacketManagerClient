@@ -3,6 +3,6 @@
 
 
 int main(int argc, char **argv) {
-    App::getInstance()->run(argc, **argv);
+    App::getInstance()->run(argc, argv);
     return 0;
 }

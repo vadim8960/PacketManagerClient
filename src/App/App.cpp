@@ -12,7 +12,7 @@ App *App::getInstance() {
     return &instance;
 }
 
-void init() {
+void App::init() {
     std::string s;
     char dir[256];
     getcwd(dir, 256);
@@ -22,24 +22,24 @@ void init() {
     f.close();
 }
 
-void update() {
+void App::update() {
     std::cout << "Вызвана команда update" << std::endl;
 }
 
-void deinit() {
+void App::deinit() {
     std::cout << "Вызвана команда deinit" << std::endl;
 }
 
-void add(std::string NamePacket) {
+void App::add(std::string NamePacket) {
     std::cout << "Вызвана команда add с параметром " << NamePacket << std::endl;
 }
 
-void version() {
+void App::version() {
     std::cout << "Вызвана команда version"
               << std::endl;
 }
 
-void run(int argc, char **argv) {
+void App::run(int argc, char **argv) {
     cxxopts::Options options("test", "A brief description");
 
     options.add_options()
@@ -75,10 +75,3 @@ void run(int argc, char **argv) {
         exit(0);
     }
 }
-
-
-
-
-
-
-
