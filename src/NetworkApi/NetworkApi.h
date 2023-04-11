@@ -1,0 +1,14 @@
+//
+// Created by vadim on 11.04.23.
+//
+
+#ifndef PACKETMANAGERCLIENT_NETWORKAPI_H
+#define PACKETMANAGERCLIENT_NETWORKAPI_H
+
+
+class NetworkApi {
+
+};
+
+
+#endif //PACKETMANAGERCLIENT_NETWORKAPI_H
