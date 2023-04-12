@@ -4,6 +4,10 @@
 
 #include "NetworkApi.h"
 #include <iostream>
+#include "base64.hpp"
+#include <jsoncpp/json/json.h>
+
+#include <fstream>
 
 NetworkApi *NetworkApi::instance = nullptr;
 NetworkApiDestroyer NetworkApi::destroyer;
@@ -30,5 +34,18 @@ void NetworkApi::setPath(std::string_view path) {
 
 void NetworkApi::getPacket(std::string_view packet_name) {
     RestClient::Response resp = RestClient::get(rest_path.append(packet_name));
-    std::cout << resp.body << std::endl;
+    Json::Value root;
+    Json::Reader reader;
+    bool res = reader.parse(resp.body, root);
+    if (!res) {
+        std::cout << "Cannot parsing json\n";
+        exit(1);
+    }
+    std::ofstream out("../tmp.tar.xz", std::ios::binary | std::ios::out);
+    if (!out.is_open()) {
+        std::cout << "Error open file\n";
+        exit(1);
+    }
+    out << base64::from_base64(root["data"].asString());
+    out.close();
 }

@@ -7,3 +7,6 @@
 [submodule "libs/restclient-cpp"]
 	path = libs/restclient-cpp
 	url = https://github.com/mrtazz/restclient-cpp.git
+[submodule "libs/base64"]
+	path = libs/base64
+	url = https://github.com/vadim8960/base64.git
