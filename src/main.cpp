@@ -3,13 +3,12 @@
 #include <filesystem>
 #include <unistd.h>
 #include "App.h"
-#include "cxxopts.hpp"
 
-#include "restclient-cpp/restclient.h"
+#include "NetworkApi.h"
 
 int main(int argc, char *argv[]) {
-    RestClient::Response r = RestClient::get("http://0.0.0.0:3000/packets_api/importantlib.1.0");
-    std::cout << r.body << std::endl;
+    NetworkApi::getInstance().setPath("http://0.0.0.0:3000/packets_api/");
+    NetworkApi::getInstance().getPacket("importantlib.1.0");
 //    App* t = App::Run(argc, argv);
     return 0;
 }
