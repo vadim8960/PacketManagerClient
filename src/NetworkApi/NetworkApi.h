@@ -5,7 +5,7 @@
 #ifndef PACKETMANAGERCLIENT_NETWORKAPI_H
 #define PACKETMANAGERCLIENT_NETWORKAPI_H
 
-#include "restclient-cpp/restclient.h"
+#include <string>
 
 class NetworkApi;
 
@@ -42,6 +42,5 @@ private:
     static NetworkApiDestroyer destroyer;
     std::string rest_path;
 };
-
 
 #endif //PACKETMANAGERCLIENT_NETWORKAPI_H

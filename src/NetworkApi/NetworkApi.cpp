@@ -4,10 +4,11 @@
 
 #include "NetworkApi.h"
 #include <iostream>
+#include <fstream>
+
 #include "base64.hpp"
 #include <jsoncpp/json/json.h>
-
-#include <fstream>
+#include "restclient-cpp/restclient.h"
 
 NetworkApi *NetworkApi::instance = nullptr;
 NetworkApiDestroyer NetworkApi::destroyer;
