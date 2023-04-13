@@ -42,11 +42,11 @@ void NetworkApi::getPacket(std::string_view packet_name) {
         std::cout << "Cannot parsing json\n";
         exit(1);
     }
-    std::ofstream out("../tmp.tar.xz", std::ios::binary | std::ios::out);
-    if (!out.is_open()) {
-        std::cout << "Error open file\n";
-        exit(1);
-    }
-    out << base64::from_base64(root["data"].asString());
-    out.close();
+//    std::ofstream out("../tmp.tar.xz", std::ios::binary | std::ios::out);
+//    if (!out.is_open()) {
+//        std::cout << "Error open file\n";
+//        exit(1);
+//    }
+//    out << base64::from_base64(root["data"].asString());
+//    out.close();
 }
