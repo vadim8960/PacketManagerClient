@@ -11,5 +11,5 @@
 std::string PacketManagerUtils::getCurrentPath() {
     char dir[MAXIMUM_DIR_NAME_LEN];
     getcwd(dir, MAXIMUM_DIR_NAME_LEN);
-    return std::string(dir);
+    return std::string{dir};
 }
