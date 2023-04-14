@@ -5,6 +5,7 @@
 #ifndef PACKETMANAGERCLIENT_APP_H
 #define PACKETMANAGERCLIENT_APP_H
 
+#include <string>
 
 class App {
 private:
@@ -14,7 +15,7 @@ private:
 
     void init();
     void update();
-    void add(std::string NamePacket);
+    void add(std::string_view NamePacket);
 
 public:
     static App *getInstance();

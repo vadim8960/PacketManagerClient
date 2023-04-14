@@ -1,12 +1,12 @@
 #include <iostream>
-#include <fstream>
 #include <filesystem>
-#include <unistd.h>
 #include "cxxopts.hpp"
 #include "App.h"
 #include "version.h"
 #include <string>
 #include "Utils.h"
+#include <toml++/toml.h>
+#include "FileReader.h"
 
 namespace fs = std::filesystem;
 
@@ -17,17 +17,33 @@ App *App::getInstance() {
 
 void App::init() {
     std::string currentDir = PacketManagerUtils::getCurrentPath();
+    static constexpr std::string_view packinfo_sourse = "[info]\n"
+                                                        "name = \"\"\n"
+                                                        "version = \"\"\n"
+                                                        "author = \"\"\n"
+                                                        "contact = \"\"\n"
+                                                        "link = \"\"\n"
+                                                        "\n"
+                                                        "dependencies = [\n"
+                                                        "]\n";
     fs::create_directories(currentDir + "/.depend");
-    std::ofstream f(currentDir + "/dependences.toml");
-    f.close();
+    std::ofstream out(currentDir + "/packinfo.toml");
+    out << packinfo_sourse;
 }
 
 void App::update() {
-    std::cout << "Вызвана команда update" << std::endl;
+    std::string currentDir = PacketManagerUtils::getCurrentPath();
+    auto file = FileReader::read(currentDir + "/packinfo.toml", false);
+    toml::table config = toml::parse(file);
 }
 
-void App::add(std::string NamePacket) {
-    std::cout << "Вызвана команда add с параметром " << NamePacket << std::endl;
+void App::add(std::string_view NamePacket) {
+    std::string currentDir = PacketManagerUtils::getCurrentPath();
+    auto file = FileReader::read(currentDir + "/packinfo.toml", false);
+    toml::table config = toml::parse(file);
+    config["info"]["dependencies"].as_array()->push_back(NamePacket);
+    std::ofstream out(currentDir + "/packinfo.toml", std::ios::out);
+    out << config;
 }
 
 void App::run(int argc, char **argv) {

@@ -11,8 +11,5 @@ find_package(ZLIB REQUIRED)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC cxxopts)
 target_link_libraries(${PROJECT_NAME} PUBLIC App)
-target_link_libraries(${PROJECT_NAME} PUBLIC NetworkApi)
 target_link_libraries(${PROJECT_NAME} PUBLIC ZLIB::ZLIB)
-target_link_libraries(${PROJECT_NAME} PUBLIC metadata)
