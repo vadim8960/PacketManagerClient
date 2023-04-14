@@ -7,5 +7,6 @@ add_library(${PROJECT_NAME} STATIC App.cpp App.h)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC cxxopts)
 target_link_libraries(${PROJECT_NAME} PUBLIC metadata)
+target_link_libraries(${PROJECT_NAME} PUBLIC Utils)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

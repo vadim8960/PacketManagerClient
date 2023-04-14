@@ -6,6 +6,7 @@
 #include "App.h"
 #include "version.h"
 #include <string>
+#include "Utils.h"
 
 namespace fs = std::filesystem;
 
@@ -15,12 +16,9 @@ App *App::getInstance() {
 }
 
 void App::init() {
-    std::string s;
-    char dir[256];
-    getcwd(dir, 256);
-    std::cout << "Current directory is " << dir << std::endl;
-    fs::create_directories(std::string(dir) + "/.depend");
-    std::ofstream f(std::string(dir) + "/dependences.txt");
+    std::string currentDir = PacketManagerUtils::getCurrentPath();
+    fs::create_directories(currentDir + "/.depend");
+    std::ofstream f(currentDir + "/dependences.toml");
     f.close();
 }
 
