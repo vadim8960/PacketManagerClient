@@ -5,10 +5,11 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_library(${PROJECT_NAME} STATIC App.cpp App.h)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC cxxopts)
-target_link_libraries(${PROJECT_NAME} PUBLIC metadata)
-target_link_libraries(${PROJECT_NAME} PUBLIC Utils)
-target_link_libraries(${PROJECT_NAME} PUBLIC tomlplusplus_tomlplusplus)
-target_link_libraries(${PROJECT_NAME} PUBLIC filereader)
+target_link_libraries(${PROJECT_NAME} PRIVATE cxxopts)
+target_link_libraries(${PROJECT_NAME} PRIVATE metadata)
+target_link_libraries(${PROJECT_NAME} PRIVATE Utils)
+target_link_libraries(${PROJECT_NAME} PRIVATE tomlplusplus_tomlplusplus)
+target_link_libraries(${PROJECT_NAME} PRIVATE filereader)
+target_link_libraries(${PROJECT_NAME} PRIVATE NetworkApi)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

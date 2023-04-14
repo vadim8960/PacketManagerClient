@@ -7,6 +7,7 @@
 #include "Utils.h"
 #include <toml++/toml.h>
 #include "FileReader.h"
+#include "NetworkApi.h"
 
 namespace fs = std::filesystem;
 
@@ -35,6 +36,12 @@ void App::update() {
     std::string currentDir = PacketManagerUtils::getCurrentPath();
     auto file = FileReader::read(currentDir + "/packinfo.toml", false);
     toml::table config = toml::parse(file);
+    toml::array* deps = config["info"]["dependencies"].as_array();
+    for (std::size_t i = 0; i < deps->size(); ++i) {
+        std::string packet = *deps->get(i)->value<std::string>();
+        std::cout << packet << std::endl;
+        NetworkApi::getInstance().getPacket(packet);
+    }
 }
 
 void App::add(std::string_view NamePacket) {
@@ -48,6 +55,8 @@ void App::add(std::string_view NamePacket) {
 
 void App::run(int argc, char **argv) {
     cxxopts::Options options("test", "A brief description");
+
+    NetworkApi::getInstance().setPath("http://0.0.0.0:3000/packets_api/");
 
     options.add_options()
             ("i,init", "Print usage")
