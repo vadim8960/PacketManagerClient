@@ -6,5 +6,6 @@ set(CMAKE_CXX_STANDARD 17)
 add_library(${PROJECT_NAME} STATIC App.cpp App.h)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC cxxopts)
+target_link_libraries(${PROJECT_NAME} PUBLIC metadata)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

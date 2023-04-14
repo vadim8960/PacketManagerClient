@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include "cxxopts.hpp"
 #include "App.h"
+#include "version.h"
+#include <string>
 
 namespace fs = std::filesystem;
 
@@ -26,17 +28,8 @@ void App::update() {
     std::cout << "Вызвана команда update" << std::endl;
 }
 
-void App::deinit() {
-    std::cout << "Вызвана команда deinit" << std::endl;
-}
-
 void App::add(std::string NamePacket) {
     std::cout << "Вызвана команда add с параметром " << NamePacket << std::endl;
-}
-
-void App::version() {
-    std::cout << "Вызвана команда version"
-              << std::endl;
 }
 
 void App::run(int argc, char **argv) {
@@ -45,7 +38,6 @@ void App::run(int argc, char **argv) {
     options.add_options()
             ("i,init", "Print usage")
             ("u,update", "Print usage")
-            ("d,deinit", "Print usage")
             ("a,add", "Print usage", cxxopts::value<std::string>())
             ("h,help", "Print usage")
             ("v,version", "Print usage");
@@ -56,8 +48,6 @@ void App::run(int argc, char **argv) {
         init();
     if (result.count("update"))
         update();
-    if (result.count("deinit"))
-        deinit();
     if (result.count("add")) {
         if (result.count("add") > 1) {
             std::cout << "ERROR" << std::endl;
@@ -69,7 +59,7 @@ void App::run(int argc, char **argv) {
     }
     if (result.count("version"))
         version();
-    if ((result.count("init") + result.count("update") + result.count("deinit") + result.count("add") == 0) ||
+    if ((result.count("init") + result.count("update") + result.count("version") + result.count("add") == 0) ||
         (result.count("help"))) {
         std::cout << options.help() << std::endl;
         exit(0);

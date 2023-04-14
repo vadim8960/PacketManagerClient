@@ -14,9 +14,7 @@ private:
 
     void init();
     void update();
-    void deinit();
     void add(std::string NamePacket);
-    void version();
 
 public:
     static App *getInstance();

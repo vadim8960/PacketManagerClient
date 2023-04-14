@@ -1,6 +1,5 @@
 #include <iostream>
 #include "App.h"
-
 #include <zlib.h>
 
 #include "NetworkApi.h"
