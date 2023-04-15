@@ -59,24 +59,46 @@ static bool get_packet(const std::string &projectRoot, const std::string &packet
     return true;
 }
 
-static void recursive_packet_update(const std::string &projectRoot, const std::string &packet_path) {
-
-}
-
-void App::update() {
-    std::string projectRoot = PacketManagerUtils::getCurrentPath();
-    auto file = FileReader::read(projectRoot + "/packinfo.toml", false);
+static void recursive_packet_update(const std::string &projectRoot, const std::string &packet_path,
+                                    std::map<std::string, bool> &valid_packets, unsigned prev_size = 0) {
+    auto file = FileReader::read(packet_path, false);
     toml::table config = toml::parse(file);
     toml::array *deps = config["info"]["dependencies"].as_array();
     std::string packet;
-    std::ofstream cmake_out(projectRoot + "/.depend/CMakeLists.txt", std::ios::out);
     for (std::size_t i = 0; i < deps->size(); ++i) {
         packet = *deps->get(i)->value<std::string>();
         auto info = splitString(packet, "/");
         if (!get_packet(projectRoot, info[0] + "." + info[1]))
             continue;
-        cmake_out << "add_subdirectory(" + info[0] + ")" << std::endl;
+        valid_packets[info[0]] = true;
+        if (valid_packets.size() == prev_size)
+            continue;
+        recursive_packet_update(projectRoot, projectRoot + "/.depend/" + info[0] + "/packinfo.toml", valid_packets,
+                                valid_packets.size());
     }
+}
+
+void App::update() {
+    std::string projectRoot = PacketManagerUtils::getCurrentPath();
+    std::map<std::string, bool> valid_packets;
+    recursive_packet_update(projectRoot, projectRoot + "/packinfo.toml", valid_packets);
+    std::ofstream cmake_out(projectRoot + "/.depend/CMakeLists.txt", std::ios::out);
+    for (const auto &[key, value]: valid_packets) {
+        cmake_out << "add_subdirectory(" + key + ")" << std::endl;
+    }
+
+
+//    auto file = FileReader::read(projectRoot + "/packinfo.toml", false);
+//    toml::table config = toml::parse(file);
+//    toml::array *deps = config["info"]["dependencies"].as_array();
+//    std::string packet;
+//    for (std::size_t i = 0; i < deps->size(); ++i) {
+//        packet = *deps->get(i)->value<std::string>();
+//        auto info = splitString(packet, "/");
+//        if (!get_packet(projectRoot, info[0] + "." + info[1]))
+//            continue;
+//        cmake_out << "add_subdirectory(" + info[0] + ")" << std::endl;
+//    }
 }
 
 void App::add(std::string_view NamePacket) {
