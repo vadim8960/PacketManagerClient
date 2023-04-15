@@ -32,24 +32,50 @@ void App::init() {
     out << packinfo_sourse;
 }
 
+static std::vector<std::string> splitString(std::string s, const std::string &del) {
+    std::vector<std::string> res;
+    std::string tmp;
+    size_t pos;
+    while ((pos = s.find(del)) != std::string::npos) {
+        tmp = s.substr(0, pos);
+        if (!tmp.empty())
+            res.push_back(tmp);
+        s.erase(0, pos + del.size());
+    }
+    if (!s.empty())
+        res.push_back(s);
+    return res;
+}
+
+static bool get_packet(const std::string &projectRoot, const std::string &packet_name) {
+    auto pack = NetworkApi::getInstance().getPacket(packet_name);
+    if (pack.empty()) return false;
+    std::string packet_path = projectRoot + "/.depend/" + packet_name + ".tar.xz";
+    std::string dest_packet_path = projectRoot + "/.depend/";
+    std::ofstream out(packet_path, std::ios::out | std::ios::binary);
+    out << pack;
+    out.close();
+    PacketManagerUtils::unzip(packet_path, dest_packet_path);
+    return true;
+}
+
+static void recursive_packet_update(const std::string &projectRoot, const std::string &packet_path) {
+
+}
+
 void App::update() {
     std::string projectRoot = PacketManagerUtils::getCurrentPath();
     auto file = FileReader::read(projectRoot + "/packinfo.toml", false);
     toml::table config = toml::parse(file);
     toml::array *deps = config["info"]["dependencies"].as_array();
-    std::string packet, packet_path, dest_packet_path;
+    std::string packet;
     std::ofstream cmake_out(projectRoot + "/.depend/CMakeLists.txt", std::ios::out);
     for (std::size_t i = 0; i < deps->size(); ++i) {
         packet = *deps->get(i)->value<std::string>();
-        auto pack = NetworkApi::getInstance().getPacket(packet);
-        if (pack.empty()) continue;
-        packet_path = projectRoot + "/.depend/" + packet + ".tar.xz";
-        dest_packet_path = projectRoot + "/.depend/";
-        std::ofstream out(packet_path, std::ios::out | std::ios::binary);
-        out << pack;
-        out.close();
-        PacketManagerUtils::unzip(packet_path, dest_packet_path);
-        cmake_out << "add_subdirectory(" + packet + ")" << std::endl;
+        auto info = splitString(packet, "/");
+        if (!get_packet(projectRoot, info[0] + "." + info[1]))
+            continue;
+        cmake_out << "add_subdirectory(" + info[0] + ")" << std::endl;
     }
 }
 
