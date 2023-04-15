@@ -7,6 +7,6 @@ add_library(${PROJECT_NAME} STATIC NetworkApi.cpp NetworkApi.h)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE restclient-cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE base64)
-target_link_libraries(${PROJECT_NAME} PRIVATE jsoncpp)
+target_link_libraries(${PROJECT_NAME} PUBLIC jsoncpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

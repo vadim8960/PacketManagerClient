@@ -35,7 +35,7 @@ public:
 
     void setPath(std::string_view path);
 
-    void getPacket(std::string_view packet_name);
+    std::string getPacket(std::string_view packet_name);
 
 private:
     static NetworkApi *instance;

@@ -11,6 +11,8 @@ namespace PacketManagerUtils {
 
     std::string getCurrentPath();
 
+    void unzip(const std::string& path, const std::string& dest_path);
+
 }
 
 #endif //PACKETMANAGERCLIENT_UTILS_H

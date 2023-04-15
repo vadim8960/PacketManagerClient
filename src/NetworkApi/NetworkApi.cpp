@@ -33,8 +33,10 @@ void NetworkApi::setPath(std::string_view path) {
     rest_path = path;
 }
 
-void NetworkApi::getPacket(std::string_view packet_name) {
-    RestClient::Response resp = RestClient::get(rest_path.append(packet_name));
+std::string NetworkApi::getPacket(std::string_view packet_name) {
+    std::string path = rest_path;
+    path.append(packet_name);
+    RestClient::Response resp = RestClient::get(path);
     Json::Value root;
     Json::Reader reader;
     bool res = reader.parse(resp.body, root);
@@ -42,12 +44,13 @@ void NetworkApi::getPacket(std::string_view packet_name) {
         std::cout << "Cannot parsing json\n";
         exit(1);
     }
-    std::cout << root << std::endl;
+    std::cout << packet_name << " ... " << (resp.code == 200 ? "done" : "error") << std::endl;
+    return base64::from_base64(root["data"].asString());
 //    std::ofstream out("../tmp.tar.xz", std::ios::binary | std::ios::out);
 //    if (!out.is_open()) {
 //        std::cout << "Error open file\n";
 //        exit(1);
 //    }
-//    out << base64::from_base64(root["data"].asString());
+//    out << ;
 //    out.close();
 }

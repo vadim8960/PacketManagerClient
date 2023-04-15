@@ -33,23 +33,32 @@ void App::init() {
 }
 
 void App::update() {
-    std::string currentDir = PacketManagerUtils::getCurrentPath();
-    auto file = FileReader::read(currentDir + "/packinfo.toml", false);
+    std::string projectRoot = PacketManagerUtils::getCurrentPath();
+    auto file = FileReader::read(projectRoot + "/packinfo.toml", false);
     toml::table config = toml::parse(file);
-    toml::array* deps = config["info"]["dependencies"].as_array();
+    toml::array *deps = config["info"]["dependencies"].as_array();
+    std::string packet, packet_path, dest_packet_path;
+    std::ofstream cmake_out(projectRoot + "/.depend/CMakeLists.txt", std::ios::out);
     for (std::size_t i = 0; i < deps->size(); ++i) {
-        std::string packet = *deps->get(i)->value<std::string>();
-        std::cout << packet << std::endl;
-        NetworkApi::getInstance().getPacket(packet);
+        packet = *deps->get(i)->value<std::string>();
+        auto pack = NetworkApi::getInstance().getPacket(packet);
+        if (pack.empty()) continue;
+        packet_path = projectRoot + "/.depend/" + packet + ".tar.xz";
+        dest_packet_path = projectRoot + "/.depend/";
+        std::ofstream out(packet_path, std::ios::out | std::ios::binary);
+        out << pack;
+        out.close();
+        PacketManagerUtils::unzip(packet_path, dest_packet_path);
+        cmake_out << "add_subdirectory(" + packet + ")" << std::endl;
     }
 }
 
 void App::add(std::string_view NamePacket) {
-    std::string currentDir = PacketManagerUtils::getCurrentPath();
-    auto file = FileReader::read(currentDir + "/packinfo.toml", false);
+    std::string projectRoot = PacketManagerUtils::getCurrentPath();
+    auto file = FileReader::read(projectRoot + "/packinfo.toml", false);
     toml::table config = toml::parse(file);
     config["info"]["dependencies"].as_array()->push_back(NamePacket);
-    std::ofstream out(currentDir + "/packinfo.toml", std::ios::out);
+    std::ofstream out(projectRoot + "/packinfo.toml", std::ios::out);
     out << config;
 }
 
@@ -85,6 +94,5 @@ void App::run(int argc, char **argv) {
     if ((result.count("init") + result.count("update") + result.count("version") + result.count("add") == 0) ||
         (result.count("help"))) {
         std::cout << options.help() << std::endl;
-        exit(0);
     }
 }
