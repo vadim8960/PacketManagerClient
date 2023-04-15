@@ -86,19 +86,6 @@ void App::update() {
     for (const auto &[key, value]: valid_packets) {
         cmake_out << "add_subdirectory(" + key + ")" << std::endl;
     }
-
-
-//    auto file = FileReader::read(projectRoot + "/packinfo.toml", false);
-//    toml::table config = toml::parse(file);
-//    toml::array *deps = config["info"]["dependencies"].as_array();
-//    std::string packet;
-//    for (std::size_t i = 0; i < deps->size(); ++i) {
-//        packet = *deps->get(i)->value<std::string>();
-//        auto info = splitString(packet, "/");
-//        if (!get_packet(projectRoot, info[0] + "." + info[1]))
-//            continue;
-//        cmake_out << "add_subdirectory(" + info[0] + ")" << std::endl;
-//    }
 }
 
 void App::add(std::string_view NamePacket) {
@@ -116,13 +103,19 @@ void App::run(int argc, char **argv) {
     NetworkApi::getInstance().setPath("http://0.0.0.0:3000/packets_api/");
 
     options.add_options()
-            ("i,init", "Print usage")
-            ("u,update", "Print usage")
-            ("a,add", "Print usage", cxxopts::value<std::string>())
-            ("h,help", "Print usage")
-            ("v,version", "Print usage");
+            ("i,init", "инициализация пакетного клиента в проекте")
+            ("u,update", "потягивание зависимостей с сервера")
+            ("a,add", "добавление зависимости к приложению", cxxopts::value<std::string>())
+            ("h,help", "вывод данное сообщение")
+            ("v,version", "вывод версии проекта");
 
-    auto result = options.parse(argc, argv);
+    cxxopts::ParseResult result;
+    try {
+        result = options.parse(argc, argv);
+    } catch (std::exception &exception) {
+        std::cout << exception.what() << std::endl;
+        exit(1);
+    }
 
     if (result.count("init"))
         init();
@@ -130,8 +123,8 @@ void App::run(int argc, char **argv) {
         update();
     if (result.count("add")) {
         if (result.count("add") > 1) {
-            std::cout << "ERROR" << std::endl;
-            exit(0);
+            std::cout << "В одной команде разрешается писать не более одного -a" << std::endl;
+            exit(1);
         } else {
             std::string NamePacket = result["add"].as<std::string>();
             add(NamePacket);
